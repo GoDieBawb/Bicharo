@@ -30,21 +30,7 @@ public class Main extends SimpleApplication {
         GAME_MANAGER.startGame();
         flyCam.setMoveSpeed(0);
         inputManager.setCursorVisible(false);
-    }
-    
-    private void testChoiceBox() {
-        
-        TextBoard textBoard = new TextBoard(guiNode);
-        textBoard.showMessage("Test", "A Test Message");
-        textBoard.scale(.5f);
-        
-        ArrayList<String> x = new ArrayList<>(Arrays.asList("Agree", "Disagree", "Walk", "Run", "Eat", "Drink"));        
-        ChoiceBox choiceBox = new ChoiceBox(guiNode, x, textBoard);
-        choiceBox.show();
-        choiceBox.scale(.5f);
-        
     }    
-            
     
     @Override
     public void simpleUpdate(float tpf) {

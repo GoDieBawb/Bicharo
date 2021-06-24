@@ -5,7 +5,7 @@
  */
 package bicharo;
 
-import bicharo.Scene.SceneManager;
+import bicharo.scene.SceneManager;
 import bicharo.entity.EntityManager;
 import bicharo.gui.GuiManager;
 import bicharo.player.PlayerHandler;

@@ -5,15 +5,14 @@
  */
 package bicharo.player;
 
-import bicharo.Main;
 import bicharo.util.InteractionManager;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.FlyByCamera;
-import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 
 /**
@@ -33,7 +32,7 @@ public class PlayerManager {
         this.im  = im;
         flyCam   = app.getFlyByCamera();
         rootNode = app.getRootNode();
-        player   = new Player();
+        player   = new Player(app.getAssetManager(), app.getRootNode());
         player.cameraNode.setLocalTranslation(10, 2, 10);
         movePlayer(0);
     }
@@ -45,40 +44,43 @@ public class PlayerManager {
     private void movePlayer(float tpf) {
         float moveSpeed = 5f;
         player.cameraNode.setLocalTranslation(player.cameraNode.getLocalTranslation().multLocal(1,0,1).add(0, 1.1f, 0));
-        player.cameraNode.lookAt(camera.getDirection().mult(999999), new Vector3f(0,1,0)); //Makes the gun point
+        player.collider.setLocalTranslation(0,1.1f,0); //Default collider location
+        
         if (im.getIsPressed("Up")) {
-            if (moveCheck(camera.getDirection(), rootNode))
+            player.collider.getLocalTranslation().addLocal(0,0,2);
+            if (moveCheck(camera.getDirection(), rootNode.getChild("Scene")))
                 player.cameraNode.move(camera.getDirection().mult(tpf).mult(moveSpeed));
+            
         }
+        
         else if (im.getIsPressed("Down")) {
-            if (moveCheck(camera.getDirection().negate(), rootNode))
+            player.collider.getLocalTranslation().addLocal(0,0,-2);
+            if (moveCheck(camera.getDirection().negate(), rootNode.getChild("Scene")))
                 player.cameraNode.move(camera.getDirection().negate().mult(tpf).mult(moveSpeed));
         }
+        
         if (im.getIsPressed("Right")) {
-            if (moveCheck(camera.getLeft().negate(), rootNode))
+            player.collider.getLocalTranslation().addLocal(-1,0,0);
+            if (moveCheck(camera.getLeft().negate(), rootNode.getChild("Scene")))
                 player.cameraNode.move(camera.getLeft().negate().mult(tpf).mult(moveSpeed));
         }
+        
         else if (im.getIsPressed("Left")) {
-            if (moveCheck(camera.getLeft(), rootNode))
+            player.collider.getLocalTranslation().addLocal(1,0,0);
+            if (moveCheck(camera.getLeft(), rootNode.getChild("Scene")))
                 player.cameraNode.move(camera.getLeft().mult(tpf).mult(moveSpeed));
         }
+        
+        player.cameraNode.lookAt(camera.getDirection().mult(999999).setY(0), new Vector3f(0,1,0)); //Makes the gun point
         camera.setLocation(player.getLocalTranslation().multLocal(1,0,1).add(0, 1.1f, 0));
+        
     }
     
-    public boolean moveCheck(Vector3f moveDir, Node collisionNode) {
+    public boolean moveCheck(Vector3f moveDir, Spatial collisionNode) {
 
-        Ray              ray     = new Ray(player.cameraNode.getLocalTranslation().multLocal(1,0,1).add(0,1,0), moveDir);
         CollisionResults results = new CollisionResults();
-        collisionNode.collideWith(ray, results);
-
-        for (int i = 0; i < results.size(); i++) {
-
-            float dist = results.getCollision(i).getContactPoint().distance(player.cameraNode.getLocalTranslation());
-            return dist >= 2.0f;
-
-        }
-
-        return true;
+        collisionNode.collideWith(player.collider.getWorldBound(), results);
+        return results.size() <= 0;
 
     }      
     
