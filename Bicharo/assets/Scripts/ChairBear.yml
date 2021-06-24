@@ -1,0 +1,46 @@
+Start:
+  Script:
+    - animate idle_a
+
+Interact:
+  Script:
+    - if <player.hasflag#fear.!> && <player.hasflag#nofear.!>
+    - chat Bear "I am the Bear in the Chair. Fear my mighty throne and tremble before me. Do you fear me?"
+    - yesno
+    - end
+    
+    - if <player.flag#fear>
+    - chat Bear "What's up scared bitch?"
+    - end
+    
+    - if <player.flag#nofear>
+    - chat Bear "You should have feared me."
+    - end    
+
+While:
+  Script:
+    - if <inprox>
+    - look <camera>
+    - end
+    
+    - if <player.interacting> && <player.choice#Yes>
+    - closechoice
+    - chat Bear "Okay good."
+    - flag fear
+    - end
+    
+    - if <player.interacting> && <player.choice#No>
+    - closechoice
+    - chat Bear "Fuck you then."
+    - flag nofear    
+    - end
+
+Proximity:
+  Distance: 3
+  Enter:
+    - alert Test Talk "Talk to Bear in the Chair"
+    - animate idle_stand    
+  Exit:
+    - closealert
+    - closechat
+    - animate idle_a    

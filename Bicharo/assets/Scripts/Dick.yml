@@ -1,0 +1,24 @@
+Fields:
+  - int health <$15>
+
+Start:
+  Script:
+    - animate _Stand
+
+Interact:
+  Script:
+    - chat Dick "I am Dick the Chicken. Not much more about me."
+    - prompt $Ass,$Shit,$Bitch,<player.flag#cunt>,<&health>,<rootnode.child#Chicken.data#$Script>
+
+While:
+  Script:
+      - if <inprox>
+      - look <camera>
+
+Proximity:
+  Distance: 4
+  Enter:
+    - alert Dick Talk "Talk to Dick the Chicken"
+  Exit:
+    - closealert
+    - closechat  

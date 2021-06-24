@@ -1,0 +1,48 @@
+Fields:
+  - int health <$15>
+  - int count <$5>
+
+Start:
+  Script:
+    - debug "HELLO"
+    - animate walk
+    - scale 0.5
+    - chat Welcome "Welcome to the test world. Hold 'e' for cursor."
+    - debugtag $"This is a string constant"
+    - flag shit
+    - flag ass <$3.5.add#$3.6>
+    - flag cunt $"Flag"
+    - debugtag <player.flag#shit>
+    - debugtag <player.flag#ass>
+    - debugtag <player.flag#bitch>
+    - debugtag <player.flag#cunt>
+
+    - if <&health> < <$5.add#$16>
+    - debug "GO GO"
+    
+    - else
+    - debug "Gadget"
+
+Interact:
+  Script:
+    - chat Test "Here is a test Chat. My name is test pants. I walk in place."
+    
+While:
+  Script:
+    - if <&count> >= <$0>
+    - debugtag <&count>
+    - int count <&count.sub#$1>
+    - end
+
+    - if <inprox>
+    - look <camera>
+    - end
+    
+Proximity:
+  Distance: 4
+  Enter:
+    - alert Test Talk "Talk to Test Pants"
+  Exit:
+    - closealert
+    - closechat
+    
