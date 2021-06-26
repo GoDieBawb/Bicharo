@@ -57,8 +57,8 @@ public class PlayerManager {
             yadd  = 0;
         }
         float moveSpeed = 5f;
-        float phydist   = 1f;
-        player.cameraNode.setLocalTranslation(player.cameraNode.getLocalTranslation().multLocal(1,1*ymult,1).add(0, yadd, 0));
+        float phydist   = 1f; //Distance the physics "wiggles" around player
+        player.cameraNode.setLocalTranslation(player.cameraNode.getLocalTranslation().multLocal(1,1*ymult,1));
         player.collider.setLocalTranslation(0,.5f,phydist); //Default collider location
         
         if (im.getIsPressed("Up")) {
@@ -137,10 +137,10 @@ public class PlayerManager {
     
     private boolean moveCheck(Spatial s, Spatial collide) {
         ((Geometry) s).getMesh().updateBound();
-        s.getLocalTranslation().addLocal(0,-1.35f,0);
+        s.getLocalTranslation().addLocal(0,-.25f,0); //Offset cylinder height/2
         CollisionResults results = new CollisionResults();
         int x = collide.collideWith(s.getWorldBound(), results);
-        s.getLocalTranslation().addLocal(0,1.35f,0);
+        s.getLocalTranslation().addLocal(0,.25f,0);
         return x == 0;
     }    
     
