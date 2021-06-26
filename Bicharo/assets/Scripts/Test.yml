@@ -6,7 +6,7 @@ Start:
   Script:
     - debug "HELLO"
     - animate walk
-    - scale 0.5
+    - scale 1
     - chat Welcome "Welcome to the test world. Hold 'e' for cursor."
     - debugtag $"This is a string constant"
     - flag shit

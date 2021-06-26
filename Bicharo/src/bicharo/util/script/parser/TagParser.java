@@ -190,23 +190,7 @@ public class TagParser extends AbstractTagParser {
                     }       
                     break;
                 }
-                    
-                case "north":
-                    obj = (Boolean) (((Spatial) obj).getLocalTranslation().x < 0);
-                    break;    
-                    
-                case "south":
-                    obj = (Boolean) (((Spatial) obj).getLocalTranslation().x > 0);
-                    break;
-                    
-                case "east":
-                    obj = (Boolean) (((Spatial) obj).getLocalTranslation().z < 0);
-                    break;
-                    
-                case "west":
-                    obj = (Boolean) (((Spatial) obj).getLocalTranslation().z > 0);
-                    break;
-                    
+                
                 case "!":
                     if (((Boolean) obj)) {
                         

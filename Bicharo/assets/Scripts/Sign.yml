@@ -1,0 +1,12 @@
+Interact:
+  Script:
+    - chat Sign "Abandon all hope all ye who enter here."
+
+Proximity:
+  Distance: 3
+  Enter:
+    - alert Sign Read "A Sign Stands Here"
+  Exit:
+    - closealert
+    - closechat
+    

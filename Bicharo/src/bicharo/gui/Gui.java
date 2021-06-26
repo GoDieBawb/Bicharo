@@ -35,7 +35,7 @@ public class Gui {
             @Override
             public void onClickableClicked(GuiComponent.Clickable clickable) {
                 super.onClickableClicked(clickable);
-                if (getButtonText().equals("Talk")) {
+                if (getButtonText().equals("Talk") || getButtonText().equals("Read")) {
                     check();
                 }
 
