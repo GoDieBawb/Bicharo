@@ -49,7 +49,8 @@ public class TagParser extends AbstractTagParser {
             String fullTag     = args[i];
             String strippedTag = fullTag.split("#")[0];
             
-            String argTag = null;
+            String argTag = null;           
+            
             if (tag.contains("#")) {
                 argTag = tag.split("#", 2)[1];
             }
@@ -82,6 +83,23 @@ public class TagParser extends AbstractTagParser {
                 
                 continue;
             }            
+            
+                                    
+            //This emsures the whole grouped tag argument
+            //after the # rather than just the first argument in that tag
+            if (fullTag.contains("#")) {
+
+                //Isolate Grouped Arg Tag
+                if (argTag.contains("[")) {
+                    argTag = argTag.split("\\]")[0].substring(1);
+                    int    dotCount = argTag.split("\\.").length-1; 
+                    i+=dotCount; //Incriment i for the amount of dots in the grouped tag
+                    String realTag  = fullTag.split("#")[0]; //Get the beginning of the tag
+                    realTag += "#" + argTag; //Add the # and the entire argument tag
+                    fullTag = realTag;                                
+                }
+
+            }             
             
             switch (strippedTag) {
                 
@@ -195,15 +213,14 @@ public class TagParser extends AbstractTagParser {
                         String arg = fullTag.split("#")[1];
                         
                         if (!arg.contains(",")) {
-                            
-                            int dotCount = argTag.split("\\.").length-1;                            
+                                                   
                             Vector3f ov = (Vector3f) obj; //Original Vector
                             Vector3f mv = (Vector3f) parseTag(argTag, obj); //Math Vector
                             if (mult == 1)
                                 obj = ov.add(mv);
                             else 
                                 obj = ov.subtract(mv);
-                            i+=dotCount;
+
                             break;
                         }
                         
@@ -258,18 +275,8 @@ public class TagParser extends AbstractTagParser {
                     Object o = null;
                     for (int j = 0; j < parsers.size(); j++) {
                         
-                        AbstractTagParser p = parsers.get(j);
-                        
-                        //This shit here is attempting to leave the whole tag argument
-                        //after the # rather than just the first argument in that tag
-                        if (fullTag.contains("#")) { //LEAVING HERE TRYING TO FIGURE TAG ARGUMENTS
-                            int    dotCount = argTag.split("\\.").length-1; 
-                            String realTag  = fullTag.split("#")[0]; //Get the beginning of the tag
-                            realTag += "#" + argTag; //Add the # and the entire argument tag
-                            fullTag = realTag;
-                            i+=dotCount; //Incriment i because the recursive call will handle
-                        }
-                        
+                        AbstractTagParser p = parsers.get(j); 
+
                         o = p.parseTag(fullTag, obj);
                         if (o != null && obj != o) {
                             obj = o;

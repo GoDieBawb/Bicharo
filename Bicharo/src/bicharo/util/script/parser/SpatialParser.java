@@ -36,7 +36,7 @@ public class SpatialParser extends AbstractTagParser {
                 
             case "child":
             {
-                String[] strAr = fullTag.split("#");
+                String[] strAr = fullTag.split("#", 2);
                 obj            = (Node) ((Node) obj).getChild(strAr[1]);
                 break;
             }
