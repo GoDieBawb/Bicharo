@@ -27,6 +27,7 @@ public class UtilityManager {
         audioManager       = new AudioManager(app.getStateManager());
         fileWalker         = new FileWalker();
         interactionManager = new InteractionManager(app.getInputManager());
+        app.getStateManager().attach(scriptManager);
     }
     
     public ScriptManager getScriptManager() {

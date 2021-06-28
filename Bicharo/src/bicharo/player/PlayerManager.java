@@ -51,15 +51,13 @@ public class PlayerManager {
     
     private void movePlayer(float tpf) {
         float ymult = 0; //If not falling this will zero out the camera location
-        float yadd  = 1.1f; //Camera add offset for falling
         if (player.isFalling) {
             ymult = 1;
-            yadd  = 0;
         }
         float moveSpeed = 5f;
-        float phydist   = 1f; //Distance the physics "wiggles" around player
+        float phydist   = .5f; //Distance the physics "wiggles" around player
         player.cameraNode.setLocalTranslation(player.cameraNode.getLocalTranslation().multLocal(1,1*ymult,1));
-        player.collider.setLocalTranslation(0,.5f,phydist); //Default collider location
+        player.collider.setLocalTranslation(0,.5f,0); //Default collider location
         
         if (im.getIsPressed("Up")) {
             player.collider.getLocalTranslation().addLocal(0,0,phydist);
@@ -87,7 +85,7 @@ public class PlayerManager {
         }
         
         player.cameraNode.lookAt(camera.getDirection().mult(999999).setY(0), new Vector3f(0,1,0)); //Makes the gun point
-        camera.setLocation(player.getLocalTranslation().multLocal(1,1*ymult,1).add(0, yadd, 0));
+        camera.setLocation(player.getLocalTranslation().multLocal(1,1*ymult,1).add(0, 1.1f, 0));
         
     }
     
@@ -122,25 +120,12 @@ public class PlayerManager {
         }
     }
     
-    private boolean moveCheck(Spatial collisionNode) {
-        CollisionResults results = new CollisionResults();
-        player.collider.getMesh().updateBound();
-        collisionNode.collideWith(player.collider.getWorldBound(), results);
-        for (CollisionResult r : results) {
-            if (r.getGeometry() != player.collider && r.getGeometry() != null) {
-                System.out.println(r);
-                return false;
-            }
-        }
-        return true;
-    }
-    
     private boolean moveCheck(Spatial s, Spatial collide) {
         ((Geometry) s).getMesh().updateBound();
-        s.getLocalTranslation().addLocal(0,-.25f,0); //Offset cylinder height/2
+        s.getLocalTranslation().addLocal(0,-.15f,0); //Offset cylinder height/2 - step up height (.25-.10)
         CollisionResults results = new CollisionResults();
         int x = collide.collideWith(s.getWorldBound(), results);
-        s.getLocalTranslation().addLocal(0,.25f,0);
+        s.getLocalTranslation().addLocal(0,.15f,0);
         return x == 0;
     }    
     
@@ -164,6 +149,10 @@ public class PlayerManager {
         if (x == 0) {
             player.isFalling = true;
         }
+    }
+    
+    private void stepCheck() {
+    
     }
     
     public void update(float tpf) {

@@ -13,6 +13,7 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Cylinder;
 import java.util.HashMap;
 
@@ -34,7 +35,7 @@ public class Player implements ProximityTrigger {
     public Player(AssetManager am, Node rootNode) {
         cameraNode = new Node("Player");
         flags      = new HashMap<>();
-        Cylinder s = new Cylinder(16, 16, .2f, .5f, true);
+        Cylinder s = new Cylinder(16, 16, .25f, .5f, true);
         collider   = new Geometry("Collider", s);
         collider.rotate(FastMath.HALF_PI, 0, 0);
         Material mat = new Material(am, "Common/MatDefs/Misc/Unshaded.j3md"); 
@@ -43,7 +44,7 @@ public class Player implements ProximityTrigger {
         rootNode.attachChild(cameraNode);
         cameraNode.attachChild(collider);
         collider.setLocalTranslation(0,1f,0);
-        //collider.setCullHint(Spatial.CullHint.Always);
+        collider.setCullHint(Spatial.CullHint.Always);
     }
     
     public Node getCameraNode() {

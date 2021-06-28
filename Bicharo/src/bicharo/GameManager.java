@@ -61,7 +61,7 @@ public class GameManager {
     }
     
     public void update(float tpf) {
-        entityManager.update(tpf);
+        entityManager.update();
         playerManager.update(tpf);
     }
     

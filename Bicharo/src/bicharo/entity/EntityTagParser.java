@@ -22,27 +22,6 @@ public class EntityTagParser extends AbstractTagParser {
         
         switch (strippedTag) {
             
-            case "entity":
-            case "entities":
-                
-                //If it contains a # the next string is the name of the entity
-                if (fullTag.contains("#")) {
-
-                    String[] strAr = fullTag.split("#");
-
-                    if (strAr[1].equals("model"))
-                        obj = ((Entity) object).getModel();
-
-                    else
-                        obj = Main.GAME_MANAGER.getSceneManager().getScene().getChild(strAr[1]);
-
-                }
-
-                //If no # the tag is referring to the entity itself
-                else
-                    obj = object; //This will cause issues because it will be rejected as unparsed.
-                break;
-                
             case "ishid":
                 obj = (Boolean) ((Entity) obj).isHid();
                 break;   

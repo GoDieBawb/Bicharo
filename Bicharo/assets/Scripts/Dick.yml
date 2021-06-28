@@ -14,6 +14,16 @@ While:
   Script:
       - if <inprox>
       - look <camera>
+      - end
+      
+      - if <scriptable.location.distance#camera.location> > $5
+      - move <camera.location.sub#scriptable.location>
+      - look <camera>
+      - animate _Run
+      
+      - else
+      - animate _Stand
+      - end
 
 Proximity:
   Distance: 4

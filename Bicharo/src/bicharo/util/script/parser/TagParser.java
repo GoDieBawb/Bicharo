@@ -7,10 +7,10 @@ package bicharo.util.script.parser;
 
 import bicharo.util.script.Script;
 import bicharo.util.script.Scriptable;
+import bicharo.util.script.handler.ScriptHandler;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,6 +49,11 @@ public class TagParser extends AbstractTagParser {
             String fullTag     = args[i];
             String strippedTag = fullTag.split("#")[0];
             
+            String argTag = null;
+            if (tag.contains("#")) {
+                argTag = tag.split("#", 2)[1];
+            }
+            
             //Handle Symbol Table
             if (fullTag.startsWith("&"))
             {
@@ -79,7 +84,11 @@ public class TagParser extends AbstractTagParser {
             }            
             
             switch (strippedTag) {
-                    
+                
+                case "scriptable":
+                    obj = ScriptHandler.SCRIPTABLE;
+                    break;
+                
                 case "true":
                     obj = true;
                     break;
@@ -182,11 +191,27 @@ public class TagParser extends AbstractTagParser {
                     }
 
                     else if (obj instanceof Vector3f) {
+                        
+                        String arg = fullTag.split("#")[1];
+                        
+                        if (!arg.contains(",")) {
+                            
+                            int dotCount = argTag.split("\\.").length-1;                            
+                            Vector3f ov = (Vector3f) obj; //Original Vector
+                            Vector3f mv = (Vector3f) parseTag(argTag, obj); //Math Vector
+                            if (mult == 1)
+                                obj = ov.add(mv);
+                            else 
+                                obj = ov.subtract(mv);
+                            i+=dotCount;
+                            break;
+                        }
+                        
                         String[] floats = tag.split(strippedTag)[1].split("#")[1].split(",");
                         float x         = Float.valueOf(floats[0])*mult;
                         float y         = Float.valueOf(floats[1])*mult;
                         float z         = Float.valueOf(floats[2])*mult;
-                        obj             = ((Vector3f) obj).add(x,y,z);
+                        obj             = ((Vector3f) obj).add(x,y,z); 
                     }       
                     break;
                 }
@@ -232,12 +257,25 @@ public class TagParser extends AbstractTagParser {
                 default:
                     Object o = null;
                     for (int j = 0; j < parsers.size(); j++) {
+                        
                         AbstractTagParser p = parsers.get(j);
+                        
+                        //This shit here is attempting to leave the whole tag argument
+                        //after the # rather than just the first argument in that tag
+                        if (fullTag.contains("#")) { //LEAVING HERE TRYING TO FIGURE TAG ARGUMENTS
+                            int    dotCount = argTag.split("\\.").length-1; 
+                            String realTag  = fullTag.split("#")[0]; //Get the beginning of the tag
+                            realTag += "#" + argTag; //Add the # and the entire argument tag
+                            fullTag = realTag;
+                            i+=dotCount; //Incriment i because the recursive call will handle
+                        }
+                        
                         o = p.parseTag(fullTag, obj);
                         if (o != null && obj != o) {
                             obj = o;
                             break;
                         }
+                        
                     }
                     
                     //If o remains null no registered parser knows the tag

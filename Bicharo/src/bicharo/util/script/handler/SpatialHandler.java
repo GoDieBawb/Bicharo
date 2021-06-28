@@ -5,6 +5,7 @@
  */
 package bicharo.util.script.handler;
 
+import bicharo.util.script.ScriptManager;
 import bicharo.util.script.Scriptable;
 import bicharo.util.script.parser.TagParser;
 import com.jme3.math.Quaternion;
@@ -40,12 +41,41 @@ public class SpatialHandler extends AbstractCommandHandler {
                 s.setLocalRotation(rotation);
                 break;
             }
-            case "move":
+            case "move": 
+            {
+                Spatial  s   = scriptable.getModel();
+                Vector3f dir = (Vector3f) parser.parseTag(args[1], scriptable);
+                dir.setY(0);
+                s.move(dir.mult(1f*ScriptManager.TPF));
                 break;
+            }
             
             case "rotate":
                 break;
+            
+            case "teleport":
+                break;
                 
+            case "spin":
+                if (args.length == 1) {
+                    Spatial s = scriptable.getModel();
+                    s.rotate(0,1*ScriptManager.TPF,0);
+                }                
+                else if (args.length == 2) {
+                    float f = (Float) parser.parseTag(args[1], scriptable);
+                    Spatial s = scriptable.getModel();
+                    s.rotate(0,f*ScriptManager.TPF,0);
+                }
+                else {
+                    int spin = 1;
+                    if (args[1].equals("left")) {
+                        spin = -1;
+                    }
+                    float f = (Float) parser.parseTag(args[2], scriptable);
+                    Spatial s = scriptable.getModel();
+                    s.rotate(0,spin*f*ScriptManager.TPF,0);
+                }
+                break;
             case "scale":
                 if (args.length == 2) {
                     Spatial s = scriptable.getModel();

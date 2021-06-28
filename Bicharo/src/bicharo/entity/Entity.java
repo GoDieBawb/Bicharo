@@ -96,6 +96,7 @@ public class Entity implements Scriptable, Animated {
         return model.getLocalTranslation();
     }
     
+    String currentAnimation = "";
     @Override
     public void setAnimation(String animName) {
         
@@ -107,10 +108,12 @@ public class Entity implements Scriptable, Animated {
             return;
         }        
         
+        if (currentAnimation.equals(animName)) return;
+        currentAnimation = animName;        
         animComposer.setCurrentAction(animName);
         
     }    
-    
+
     @Override
     public void setAnimation(String animName, boolean loop) {   
         
@@ -122,6 +125,8 @@ public class Entity implements Scriptable, Animated {
             return;
         }             
         
+        if (currentAnimation.equals(animName)) return;
+        currentAnimation = animName;
         animComposer.setCurrentAction(animName);
         
     }

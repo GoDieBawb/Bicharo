@@ -1,13 +1,8 @@
 package bicharo;
 
-import bawbgui.components.ChoiceBox;
 import bawbgui.components.GuiAppState;
-import bawbgui.components.TextBoard;
 import com.jme3.app.SimpleApplication;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -30,7 +25,17 @@ public class Main extends SimpleApplication {
         GAME_MANAGER.startGame();
         flyCam.setMoveSpeed(0);
         inputManager.setCursorVisible(false);
+        initCamera();
     }    
+    
+    private void initCamera() {
+        float scale = .5f;
+        cam.setFrustumNear(cam.getFrustumNear()*scale);
+        cam.setFrustumLeft(cam.getFrustumLeft()*scale);
+        cam.setFrustumRight(cam.getFrustumRight()*scale);
+        cam.setFrustumTop(cam.getFrustumTop()*scale);
+        cam.setFrustumBottom(cam.getFrustumBottom()*scale);    
+    }
     
     @Override
     public void simpleUpdate(float tpf) {

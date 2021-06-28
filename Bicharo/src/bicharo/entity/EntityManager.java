@@ -51,10 +51,7 @@ public class EntityManager {
         
     }
     
-    public void update(float tpf) {
-        for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).script.checkForTriggers();
-        }
+    public void update() {
         
     }
     

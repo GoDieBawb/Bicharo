@@ -39,6 +39,7 @@ public class Script {
         setFields();
         setProximity();
         startAction();
+        scriptManager.getScripts().add(this);
     }
     
     private void setFields() {
@@ -306,6 +307,7 @@ public class Script {
     
     //Run on loop and checks for player interaction and distance from entity
     public void checkForTriggers() {
+        
         
         if (trigger.hasChecked()) {
             checkAction();

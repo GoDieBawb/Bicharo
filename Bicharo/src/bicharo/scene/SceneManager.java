@@ -105,7 +105,7 @@ public class SceneManager {
                         geom.setMaterial(mat);
                     }
                     
-                    geom.getMaterial().getAdditionalRenderState().setWireframe(true);
+                    //geom.getMaterial().getAdditionalRenderState().setWireframe(true);
                     geom.getMesh().updateBound();
                     //System.out.println(geom.getModelBound());
                     

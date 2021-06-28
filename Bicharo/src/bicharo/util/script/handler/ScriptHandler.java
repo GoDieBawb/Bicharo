@@ -14,6 +14,8 @@ import java.util.ArrayList;
  */
 public class ScriptHandler {
 
+    public static Scriptable SCRIPTABLE;
+    
     private final TagParser        parser;
     private final SymbolHandler    symbolHandler;
     private final LogicHandler     logicHandler;
@@ -42,6 +44,8 @@ public class ScriptHandler {
     
     //Takes the current line from the script and executes the proper command
     public void parse(ArrayList commands, Scriptable scriptable) {
+        
+        SCRIPTABLE = scriptable;
         
         //Start with assuming there is no condition to run the script
         logicHandler.setGo(true);

@@ -8,6 +8,7 @@ package bicharo.util.script.parser;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import bicharo.util.script.Scriptable;
 
 /**
  *
@@ -47,14 +48,22 @@ public class SpatialParser extends AbstractTagParser {
             }                    
 
             case "location":
+                if (obj instanceof Scriptable) {
+                    obj = ((Scriptable) obj).getLocalTranslation();
+                    break;
+                }
                 obj = ((Spatial) obj).getLocalTranslation();
                 break;
 
+            case "normalize":
+                obj = ((Vector3f)obj).normalize();
+                break;
+                
             case "distance":
             {
                 String[] strAr  = fullTag.split(strippedTag + "#", 2);
-                Vector3f check  = (Vector3f) parseTag(strAr[1], object);
-                obj             = ((Vector3f) obj).distance(check);   
+                Vector3f check   = (Vector3f) parser.parseTag(strAr[1], object);
+                obj              = ((Vector3f) obj).distance(check);   
                 break;
             }
             
