@@ -4,6 +4,7 @@ Fields:
 Start:
   Script:
     - animate _Stand
+    - flag cunt
 
 Interact:
   Script:

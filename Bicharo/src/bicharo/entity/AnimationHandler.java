@@ -35,7 +35,13 @@ public class AnimationHandler extends AbstractCommandHandler {
                     handled = false;
                     break;
                 }
-                ((Animated) scriptable).setAnimation(args[1]);
+                if (args.length == 3) {
+                    boolean loop = (args[2].equals("true"));
+                    ((Animated) scriptable).setAnimation(args[1], loop);
+                }
+                else {
+                    ((Animated) scriptable).setAnimation(args[1]);
+                }
                 handled = true;
                 break;
             

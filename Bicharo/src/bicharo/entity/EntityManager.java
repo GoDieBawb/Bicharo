@@ -11,6 +11,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import bicharo.util.FileWalker;
 
 /**
  *
@@ -18,7 +19,7 @@ import java.util.LinkedHashMap;
  */
 public class EntityManager {
     
-    private ArrayList<Entity> entities;
+    private final ArrayList<Entity> entities;
     
     public EntityManager() {
         entities = new ArrayList<>();
@@ -27,7 +28,6 @@ public class EntityManager {
     public void initEntities(Node entityNode) {
         
         entities.clear();
-        
         for (int i = 0; i < entityNode.getQuantity(); i++) {
             
             Spatial s = entityNode.getChild(i);
@@ -37,8 +37,14 @@ public class EntityManager {
             entities.add(e);
             
             LinkedHashMap map;
+            
             String fileName = s.getUserData("Script")+".yml";
-            String filePath = "Scripts/"+fileName;
+            
+            FileWalker fw = new FileWalker();
+            String filePath = fw.walk("assets/Scripts", fileName);
+            filePath = filePath.replaceAll("\\\\", "/");
+            filePath = filePath.split("assets/")[1];
+            
             map   = (LinkedHashMap) Main.GAME_MANAGER.getUtilityManager().getYamlManager()
                                         .loadYamlAsset(filePath);
 

@@ -1,0 +1,49 @@
+Start:
+  Script:
+    - animate Cross_Idle
+
+Interact:
+  Script:
+    - if <player.flag#Done>
+    - chat Friend "Living man, you will soon follow me."
+    - animate Die false
+      
+    - elseif <player.flag#Kill>
+    - chat Friend "My life was as worthless as my death... I had hoped there was a reason. But I guess my life was meaingless."
+    - flag Done
+    
+    - elseif <player.flag#Farmer>
+    - chat Friend "Have you asked him why he did this to me?"
+    - prompt $Farmer     
+    
+    - else
+    - chat Friend "I once lived as you live, walked and talked as you talk. But from earth I was soon called away."
+    - prompt $When?,$How?,$Why?      
+
+Proximity:
+  Distance: 2
+  Enter:
+    - alert Skeleton Talk "A Skeleton Meditates Under This Tree."
+  Exit:
+    - debug "Exit"
+    
+While:
+  Script:
+    - if <player.interacting> && <player.choice#When?>
+    - chat Friend "A long time ago..."
+    - closechoice
+    
+    - elseif <inprox> && <player.choice#How?>
+    - chat Friend "Violently..."
+    - closechoice
+    
+    - elseif <inprox> && <player.choice#Why?>
+    - chat Friend "Ask him..."
+    - flag Why
+    - closechoice
+    
+    - elseif <inprox> && <player.choice#Farmer>
+    - chat Friend "Not the Farmer. He didn't do anything wrong, except leaving that bull alone."
+    - flag Bull
+    - closechoice    
+    - end    

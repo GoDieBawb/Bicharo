@@ -1,0 +1,24 @@
+Proximity:
+  Distance: 2
+  Enter:
+    - alert Bottle Check "A bottle sits here on the table."
+  Exit:
+    - closealert
+
+Interact:
+  Script:
+    - chat Bottle "A bottle of liquor sits here on the table. It probably belongs to the farmer."
+    - prompt $Take,$Drink
+
+While:
+  Script:
+    - if <player.interacting> && <player.choice#Drink>
+    - chat Bottle "You don't want to drink that. Especially if it's not yours. Liquor is bad for you anyway..."
+    - closechoice
+    
+    - elseif <player.interacting> && <player.choice#Take>
+    - chat Bottle "You take the bottle of liquor from the table."
+    - hide
+    - flag Drink
+    - closechoice
+    - end

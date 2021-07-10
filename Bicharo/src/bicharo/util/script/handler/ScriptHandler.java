@@ -3,7 +3,6 @@ package bicharo.util.script.handler;
 import bicharo.util.UtilityHandler;
 import bicharo.util.script.Scriptable;
 import bicharo.util.script.parser.TagParser;
-import bicharo.util.script.handler.*;
 import com.jme3.app.state.AppStateManager;
 import java.util.ArrayList;
 
@@ -32,6 +31,7 @@ public class ScriptHandler {
         debugHandler      = new DebugHandler(parser);
         handlers          = new ArrayList<>();
         handlers.add(new SpatialHandler(parser));
+        handlers.add(new ScriptableHandler(parser));
     }
     
     public TagParser getTagParser() {

@@ -44,8 +44,8 @@ public class GameManager {
     }
     
     public void startGame() {
-        sceneManager.initScene("TestScene");
-        entityManager.initEntities((Node)sceneManager.getScene().getChild("Entity Node"));
+        sceneManager.initScene("LevelOne");
+        entityManager.initEntities((Node)sceneManager.getScene().getParent().getChild("Entity Node"));
     }
     
     public UtilityManager getUtilityManager() {

@@ -85,7 +85,7 @@ public class TagParser extends AbstractTagParser {
             }            
             
                                     
-            //This emsures the whole grouped tag argument
+            //This ensures the whole grouped tag argument
             //after the # rather than just the first argument in that tag
             if (fullTag.contains("#")) {
 

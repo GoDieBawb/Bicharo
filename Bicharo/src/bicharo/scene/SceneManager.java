@@ -37,6 +37,8 @@ public class SceneManager {
         scene = (Node) assetManager.loadModel("Scenes/"+scenePath+".j3o");
         rootNode.attachChild(scene);
         scene.setName(scenePath);
+        if (scene.getChild("Blocker") != null)
+            scene.getChild("Blocker").setCullHint(Spatial.CullHint.Always);
         makeUnshaded(scene);
     }
     

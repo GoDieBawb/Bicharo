@@ -1,0 +1,30 @@
+Start:
+  Script:
+    - animate EatLow
+
+Proximity:
+  Distance: 3
+  Enter:
+    - alert Test Talk "Talk to this Bull."
+  Exit:
+    - closealert
+    - closechat    
+    
+Interact:
+  Script:
+    - if <player.flag#Kill>
+    - chat Bull "I'd kill you too but I don't think you're worth it."
+    
+    - elseif <player.flag#Bull>
+    - chat Bull "Moo. Moo. Moo."
+    - prompt $Why?
+    
+    - else
+    - chat Bull "Moo."    
+
+While:
+  Script:
+    - if <inprox> && <player.choice#Why?>
+    - closechoice
+    - chat Bull "Because I'm the boss here. I eat what I want. I kill who I want. I've killed a lot of people but that drunk Indian was my best memory."
+    - flag Kill

@@ -1,0 +1,23 @@
+Start:
+  Script:
+    - animate walk
+    - scale .5
+    - chat Welcome "Welcome to the test world. Hold 'e' for cursor."
+
+Interact:
+  Script:
+    - chat Pants "My name is pants. I'm walkin here!"
+    
+While:
+  Script:
+    - if <inprox>
+    - look <camera>
+    - end
+    
+Proximity:
+  Distance: 2
+  Enter:
+    - alert Pants Talk "Talk to Test Pants"
+  Exit:
+    - closealert
+    - closechat

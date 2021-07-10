@@ -2,6 +2,7 @@ package bicharo.util.script;
 
 import bicharo.Main;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class Script {
     private final ProximityTrigger trigger;
     private final LinkedHashMap    map;
     
+    private boolean active;
+    
     //Contstructs the Script
     public Script(Scriptable scriptable, LinkedHashMap map, ProximityTrigger trigger) {
         System.out.println("Constructing Script For: " + scriptable.getName());
@@ -32,6 +35,7 @@ public class Script {
         this.trigger    = trigger;
         scriptManager   = Main.GAME_MANAGER.getUtilityManager().getScriptManager();
         symTab          = new HashMap();
+        active          = true;
     }
     
     //Initializes the Proximity and Start Actions
@@ -40,6 +44,14 @@ public class Script {
         setProximity();
         startAction();
         scriptManager.getScripts().add(this);
+    }
+    
+    public void activate() {
+        active = true;
+    }
+    
+    public void deactivate() {
+        active = false;
     }
     
     private void setFields() {
@@ -175,23 +187,18 @@ public class Script {
     
     //Run when the player interacts within the entities proximity
     private void checkAction() {
-
+        
         if (map.get("Interact") == null) {
+            System.out.println("No Interact Script For: " + scriptable.getName());
             trigger.setHasChecked(false);
             return;
-        }
+        }                
         
         try {
-            
-            if (inProx) {
-
-                Map<Object, Object> im   = (Map<Object, Object>)  map.get("Interact");
-                ArrayList interactScript = (ArrayList) im.get("Script");
-                scriptManager.getScriptParser().parse(interactScript, scriptable);
-                trigger.setHasChecked(false);
-
-            }
-            
+            Map<Object, Object> im   = (Map<Object, Object>)  map.get("Interact");
+            ArrayList interactScript = (ArrayList) im.get("Script");
+            scriptManager.getScriptParser().parse(interactScript, scriptable);
+            trigger.setHasChecked(false);
         }
                 
         catch(Exception e) {
@@ -308,8 +315,10 @@ public class Script {
     //Run on loop and checks for player interaction and distance from entity
     public void checkForTriggers() {
         
+        if (!active) return;
         
-        if (trigger.hasChecked()) {
+        //If trigger is interacting run check action on the in proximity scriptable
+        if (trigger.hasChecked() && inProx) {
             checkAction();
         }
         

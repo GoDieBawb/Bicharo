@@ -25,7 +25,7 @@ public class FileWalker {
             
             else {
                 
-                if (currentFile.toLowerCase().equalsIgnoreCase(fileName)) {
+                if (f.getName().equalsIgnoreCase(fileName)) {
                     
                     if (f.getAbsolutePath().contains("Empty/"))
                         continue;

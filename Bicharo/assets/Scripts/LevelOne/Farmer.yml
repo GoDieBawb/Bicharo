@@ -1,0 +1,54 @@
+Start:
+  Script:
+    - animate Idle
+
+Interact:
+  Script:
+    - if <player.flag#Bull>
+    - chat Farmer "The bull has had some violence issues in the past. He killed a drunk old Indian. Wasn't my fault. How did you know that?"
+      
+    - elseif <player.flag#Give>
+    - chat Farmer "Thanks for that drink buddy. What did you need from me?"
+
+    - else
+    - chat Farmer "It's too early for me to talk... I haven't even had a drink yet. Find me something. I can't leave the bull or else he gets violent."
+    - end
+    
+    - if <player.flag#Drink>
+    - prompt $Give
+
+    - elseif <player.flag#Give> && <player.flag#Why>
+    - prompt $Why?,$Skeleton
+    
+    - elseif <player.flag#Give>
+    - prompt $Skeleton
+
+Proximity:
+  Distance: 2
+  Enter:
+    - alert Farmer Talk "Talk to the Farmer"
+  Exit:
+    - closealert
+    - closechat      
+
+While:
+  Script:
+    - if <inprox>
+    - look <camera>
+    - end
+    
+    - if <inprox> && <player.choice#Give>
+    - chat Farmer "Thanks friend. Just let me finish off this bottle."
+    - unflag Drink
+    - flag Give
+    - closechoice
+
+    - elseif <inprox> && <player.choice#Why?>
+    - flag Farmer
+    - chat Farmer "Why what? I don't know what you're talking about..."
+    - closechoice
+
+    - elseif <inprox> && <player.choice#Skeleton>
+    - chat Farmer "I think you're losing it. There's no skeleton under that tree. You're seeing things."
+    - closechoice    
+    - end

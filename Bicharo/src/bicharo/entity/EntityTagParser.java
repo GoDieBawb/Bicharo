@@ -5,7 +5,6 @@
  */
 package bicharo.entity;
 
-import bicharo.Main;
 import bicharo.util.script.parser.AbstractTagParser;
 
 /**

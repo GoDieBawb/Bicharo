@@ -44,6 +44,8 @@ public class Player implements ProximityTrigger {
         rootNode.attachChild(cameraNode);
         cameraNode.attachChild(collider);
         collider.setLocalTranslation(0,1f,0);
+        
+        
         collider.setCullHint(Spatial.CullHint.Always);
     }
     
