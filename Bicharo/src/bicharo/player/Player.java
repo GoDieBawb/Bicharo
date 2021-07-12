@@ -29,6 +29,7 @@ public class Player implements ProximityTrigger {
     String   choice;
     Node     cameraNode;
     Geometry collider;
+    int      maxLevel;
     HashMap<String, Object> flags;
     
     
@@ -44,9 +45,16 @@ public class Player implements ProximityTrigger {
         rootNode.attachChild(cameraNode);
         cameraNode.attachChild(collider);
         collider.setLocalTranslation(0,1f,0);
-        
-        
         collider.setCullHint(Spatial.CullHint.Always);
+        maxLevel = 0;
+    }
+    
+    public void setMaxLevel(int level) {
+        maxLevel = level;
+    }
+    
+    public int getMaxLevel() {
+        return maxLevel;
     }
     
     public Node getCameraNode() {

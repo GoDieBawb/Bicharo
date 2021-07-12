@@ -60,7 +60,7 @@ public class YamlManager {
     
     //Will Save a Hashmap to a YAML file at the given path
     public void saveYaml(String path, HashMap map) {
-        
+        System.out.println("Saving to: " + path);
         DumperOptions options = new DumperOptions();
         File file             = new File(path);
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);

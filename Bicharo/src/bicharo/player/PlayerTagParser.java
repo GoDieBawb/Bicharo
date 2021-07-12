@@ -44,7 +44,6 @@ public class PlayerTagParser extends AbstractTagParser {
             case "flag":
                 String[] args = fullTag.split("#");
                 if (!((Player) obj).getFlagList().containsKey(args[1])) {
-                    System.out.println("NonExistent Flag: " + args[1]);
                     obj = -1;
                 }
                 else {
